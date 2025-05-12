@@ -1,0 +1,26 @@
+CREATE TABLE utilisateur(
+   id_etudiant VARCHAR(50),
+   mail VARCHAR(50),
+   nom VARCHAR(50),
+   prenom VARCHAR(50),
+   PRIMARY KEY(id_etudiant)
+);
+
+CREATE TABLE materiel(
+   id_materiel VARCHAR(50),
+   objet VARCHAR(50),
+   description VARCHAR(50),
+   quantite VARCHAR(50),
+   PRIMARY KEY(id_materiel)
+);
+
+CREATE TABLE reservation(
+   id_reservation VARCHAR(50),
+   date_debut VARCHAR(50),
+   date_fin VARCHAR(50),
+   id_materiel VARCHAR(50) NOT NULL,
+   id_etudiant VARCHAR(50) NOT NULL,
+   PRIMARY KEY(id_reservation),
+   FOREIGN KEY(id_materiel) REFERENCES materiel(id_materiel),
+   FOREIGN KEY(id_etudiant) REFERENCES utilisateur(id_etudiant)
+);
