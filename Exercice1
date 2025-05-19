@@ -1,0 +1,60 @@
+CREATE TABLE utilisateur (
+   id_etudiant VARCHAR(20) PRIMARY KEY,
+   mail VARCHAR(100),
+   nom VARCHAR(50),
+   prenom VARCHAR(50)
+);
+
+CREATE TABLE materiel (
+   id_materiel VARCHAR(20) PRIMARY KEY,
+   objet VARCHAR(100),
+   description TEXT,
+   quantite INT
+);
+
+CREATE TABLE reservation (
+   id_reservation VARCHAR(20) PRIMARY KEY,
+   date_debut DATE,
+   date_fin DATE,
+   id_materiel VARCHAR(20) NOT NULL,
+   id_etudiant VARCHAR(20) NOT NULL,
+   FOREIGN KEY(id_materiel) REFERENCES materiel(id_materiel),
+   FOREIGN KEY(id_etudiant) REFERENCES utilisateur(id_etudiant)
+);
+
+-- Insertions utilisateurs
+
+INSERT INTO utilisateur (id_etudiant, mail, nom, prenom) VALUES
+('etu001', 'alice.dupont@etu.univ.fr', 'Dupont', 'Alice'),
+('etu002', 'benoit.martin@etu.univ.fr', 'Martin', 'Benoît'),
+('etu003', 'chloe.lefevre@etu.univ.fr', 'Lefèvre', 'Chloé'),
+('etu004', 'david.laroche@etu.univ.fr', 'Laroche', 'David'),
+('etu005', 'emma.moreau@etu.univ.fr', 'Moreau', 'Emma'),
+('etu006', 'felix.bernard@etu.univ.fr', 'Bernard', 'Félix'),
+('etu007', 'grace.durand@etu.univ.fr', 'Durand', 'Grace'),
+('etu008', 'hugo.renaud@etu.univ.fr', 'Renaud', 'Hugo'),
+('etu009', 'ines.perrin@etu.univ.fr', 'Perrin', 'Inès'),
+('etu010', 'julien.moret@etu.univ.fr', 'Moret', 'Julien');
+
+-- Insertions matériels
+
+INSERT INTO materiel (id_materiel, objet, description, quantite) VALUES
+('mat001', 'Caméra', 'Caméra 4K avec stabilisateur', 5),
+('mat002', 'Drone', 'Drone FPV avec caméra HD', 3),
+('mat003', 'Trépied', 'Trépied en aluminium extensible', 10),
+('mat004', 'Micro', 'Microphone directionnel Rode', 8),
+('mat005', 'Éclairage LED', 'Panneau LED portable rechargeable', 6),
+('mat006', 'Tablette', 'iPad pour montage vidéo mobile', 4),
+('mat007', 'Casque audio', 'Casque Bose à réduction de bruit', 7),
+('mat008', 'PC Portable', 'Ordinateur ASUS avec Adobe installé', 5),
+('mat009', 'Carte SD', 'Carte mémoire 128Go UHS-I', 20),
+('mat010', 'Câble HDMI', 'Câble HDMI 4K 2 mètres', 15);
+
+-- Insertions réservations
+
+INSERT INTO reservation (id_reservation, date_debut, date_fin, id_materiel, id_etudiant) VALUES
+('res001', '2025-05-20', '2025-05-22', 'mat001', 'etu001'),
+('res002', '2025-05-21', '2025-05-25', 'mat002', 'etu002'),
+('res003', '2025-06-01', '2025-06-05', 'mat003', 'etu003'),
+('res004', '2025-06-10', '2025-06-12', 'mat004', 'etu004'),
+('res005', '2025-06-15', '2025-06-20', 'mat005', 'etu005');
