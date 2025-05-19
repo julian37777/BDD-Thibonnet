@@ -1,0 +1,9 @@
+SELECT u.id_etudiant, u.nom, u.prenom, r.id_reservation, r.date_debut, r.date_fin
+FROM utilisateur u
+JOIN reservation r ON u.id_etudiant = r.id_etudiant;
+
+SELECT u.nom, u.prenom, m.objet, m.description, r.date_debut, r.date_fin
+FROM utilisateur u
+JOIN reservation r ON u.id_etudiant = r.id_etudiant
+JOIN materiel m ON r.id_materiel = m.id_materiel
+WHERE u.id_etudiant = 'etu003';
