@@ -1,6 +1,6 @@
-SELECT u.id_etudiant, u.nom, u.prenom, r.id_reservation, r.date_debut, r.date_fin
-FROM utilisateur u
-JOIN reservation r ON u.id_etudiant = r.id_etudiant;
+SELECT utilisateur.id_etudiant, utilisateur.nom, utilisateur.prenom, reservation.id_reservation, reservation.date_debut, reservation.date_fin
+FROM utilisateur
+JOIN reservation ON utilisateur.id_etudiant = reservation.id_etudiant;
 
 SELECT u.nom, u.prenom, m.objet, m.description, r.date_debut, r.date_fin
 FROM utilisateur u
