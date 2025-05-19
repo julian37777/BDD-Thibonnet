@@ -1,0 +1,5 @@
+Requête pour mettre à jour la quantité d'un objet dans la table matériel :
+
+UPDATE materiel
+SET quantite = quantite - 1
+WHERE id_materiel = 'mat001'
