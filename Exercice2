@@ -1,0 +1,15 @@
+SELECT * 
+FROM materiel
+WHERE CAST(quantite AS INTEGER) > 10;
+
+SELECT * 
+FROM reservation
+WHERE id_etudiant = 'etu123'
+  AND date_debut >= '2024-09-01'
+  AND date_fin <= '2024-12-31';
+
+SELECT * 
+FROM reservation
+WHERE id_etudiant = 'etu123'
+  AND date_debut >= '2024-09-01'
+  AND date_fin <= '2024-12-31';
