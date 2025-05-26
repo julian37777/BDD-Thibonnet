@@ -1,0 +1,14 @@
+Afin de mettre en place cet exercice, tout d'abord on ajoute la table disponibilité:
+
+CREATE TABLE disponibilite (
+    id_disponibilite SERIAL PRIMARY KEY,
+    id_materiel VARCHAR(50) REFERENCES materiel(id_materiel),
+    date_debut DATE NOT NULL,
+    date_fin DATE NOT NULL
+);
+
+voici la requête permettant de mettre à jour la table réservation:
+
+ALTER TABLE reservation
+ADD COLUMN id_disponibilite INTEGER,
+ADD CONSTRAINT fk_dispo FOREIGN KEY (id_disponibilite) REFERENCES disponibilite(id_disponibilite);
