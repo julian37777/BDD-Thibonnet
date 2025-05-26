@@ -3,7 +3,7 @@ On peut supprimer un réservation avec la requête suivante :
 DELETE FROM reservation
 WHERE id_reservation = 'res003';
 
-On peut supprimer toutes les réservations dont la date de rendue est dépassée avec la requête suivante :
+On peut supprimer toutes les réservations dont la date de rendue est dépassée par rapport à la date d'aujourd'hui avec la requête suivante :
 
 DELETE FROM reservation
 WHERE date_fin < CURRENT_DATE;
