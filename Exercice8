@@ -7,8 +7,41 @@ CREATE TABLE disponibilite (
     date_fin DATE NOT NULL
 );
 
+
 voici la requête permettant de mettre à jour la table réservation:
 
 ALTER TABLE reservation
 ADD COLUMN id_disponibilite INTEGER,
 ADD CONSTRAINT fk_dispo FOREIGN KEY (id_disponibilite) REFERENCES disponibilite(id_disponibilite);
+
+
+Voici une requête permettant d'insérer des dates de disponibilités pour l'objet ID=1:
+
+INSERT INTO disponibilite (id_materiel, date_debut, date_fin)
+VALUES ('mat001', '2025-06-01', '2025-08-01');
+
+
+Puis on vérifie la disponibilité de l'objet durant une période sélectionné:
+(l'output de la requête est à 1 et l'objet est bien marquée DISPONIBLE pendant la période demandée)
+
+SELECT disponibilite.id_disponibilite,
+    CASE
+        WHEN '2025-06-10' >= disponibilite.date_debut AND '2025-06-12' <= disponibilite.date_fin
+        THEN 'DISPONIBLE'
+        ELSE 'INDISPONIBLE'
+    END AS statut
+FROM disponibilite
+WHERE disponibilite.id_materiel = 'mat001';
+
+
+Voici les commandes permettant à un administrateur de modifier les disponibilités dans la base de données:
+
+INSERT INTO disponibilite (id_materiel, date_debut, date_fin)
+VALUES ('mat001', '2025-06-01', '2025-06-30');
+
+UPDATE disponibilite
+SET date_debut = '2025-06-05', date_fin = '2025-06-25'
+WHERE id_disponibilite = 3;
+
+DELETE FROM disponibilite
+WHERE id_disponibilite = 3;
