@@ -1,4 +1,6 @@
-Voici les requêtes permettant de créer ma base de données (format SQL):
+Voici les requêtes permettant de créer ma base de données (format SQL, extrait de looping):
+ici une bonne habitude à prendre et que j'aurais du mettre en place dès le début est de définir toutes les clés primaires de type entier car dans des BDDs plus complexe avec des contraintes, 
+des IDs de type VARCHAR pourraient poser certains problèmes.
 
 CREATE TABLE utilisateur (
    id_etudiant VARCHAR(20) PRIMARY KEY,
