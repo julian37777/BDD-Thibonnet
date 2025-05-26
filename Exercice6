@@ -1,4 +1,4 @@
-On peut supprimer un réservation avec la requête suivante :
+On peut supprimer une réservation avec la requête suivante :
 
 DELETE FROM reservation
 WHERE id_reservation = 'res003';
