@@ -3,3 +3,12 @@ Requête pour mettre à jour la quantité d'un objet dans la table matériel :
 UPDATE materiel
 SET quantite = quantite - 1
 WHERE id_materiel = 'mat001'
+
+Requête pour mettre à jour la quantité d'un objet en cours de réservation et qui sera rendu dans plus de 2 jours :
+
+UPDATE materiel
+SET quantite = quantite - 1
+FROM reservation
+WHERE materiel.id_materiel = reservation.id_materiel
+  AND reservation.date_debut <= CURRENT_DATE
+  AND reservation.date_fin > CURRENT_DATE + INTERVAL '2 days';
