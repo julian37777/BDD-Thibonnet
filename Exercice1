@@ -1,3 +1,5 @@
+Voici les requêtes permettant de créer ma base de données (format SQL):
+
 CREATE TABLE utilisateur (
    id_etudiant VARCHAR(20) PRIMARY KEY,
    mail VARCHAR(100),
@@ -21,6 +23,9 @@ CREATE TABLE reservation (
    FOREIGN KEY(id_materiel) REFERENCES materiel(id_materiel),
    FOREIGN KEY(id_etudiant) REFERENCES utilisateur(id_etudiant)
 );
+
+
+Voici les requêtes que j'ai utilisés afin de remplir ma base données:
 
 -- Insertions utilisateurs
 
