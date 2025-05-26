@@ -6,8 +6,8 @@ JOIN reservation ON utilisateur.id_etudiant = reservation.id_etudiant;
 
 Cette requête affiche les informations sur le matériel emprunté par l'étudiant ID=etu003, avec les informations sur les objets réservés et les dates de réservation:
 
-SELECT u.nom, u.prenom, m.objet, m.description, r.date_debut, r.date_fin
-FROM utilisateur u
-JOIN reservation r ON u.id_etudiant = r.id_etudiant
-JOIN materiel m ON r.id_materiel = m.id_materiel
-WHERE u.id_etudiant = 'etu003';
+SELECT utilisateur.nom, utilisateur.prenom, materiel.objet, materiel.description, reservation.date_debut, reservation.date_fin
+FROM utilisateur
+JOIN reservation ON utilisateur.id_etudiant = reservation.id_etudiant
+JOIN materiel ON reservation.id_materiel = materiel.id_materiel
+WHERE utilisateur.id_etudiant = 'etu003';
