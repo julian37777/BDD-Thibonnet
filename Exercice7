@@ -1,1 +1,28 @@
+Cette requête liste uniquement les utilisateurs ayant au moins une réservation enregistrée (similaire à l'exercice 3):
 
+SELECT DISTINCT utilisateur.id_etudiant, utilisateur.nom, utilisateur.prenom
+FROM utilisateur
+JOIN reservation ON utilisateur.id_etudiant = reservation.id_etudiant;
+
+Grâce à une jointure externe gauche (LEFT JOIN), on affiche tous les objets sans réservation associée.
+
+SELECT materiel.id_materiel, materiel.objet, materiel.description
+FROM materiel
+LEFT JOIN reservation ON materiel.id_materiel = reservation.id_materiel
+WHERE reservation.id_materiel IS NULL;
+
+Cette requête compte le nombre de réservations par objet, et affiche ceux dont le nombre est égale ou dépasse 1.
+
+SELECT materiel.id_materiel, materiel.objet, COUNT(reservation.id_reservation) AS nb_emprunts
+FROM materiel
+JOIN reservation ON materiel.id_materiel = reservation.id_materiel
+GROUP BY materiel.id_materiel, materiel.objet
+HAVING COUNT(reservation.id_reservation) >= 1;
+
+On utilise une jointure gauche pour ne pas exclure les utilisateurs sans réservation, et on compte leurs emprunts (on affiche 0 s'il n'y a aucune réservation).
+
+SELECT utilisateur.id_etudiant, utilisateur.nom, utilisateur.prenom, COUNT(reservation.id_reservation) AS nb_emprunts
+FROM utilisateur
+LEFT JOIN reservation ON utilisateur.id_etudiant = reservation.id_etudiant
+GROUP BY utilisateur.id_etudiant, utilisateur.nom, utilisateur.prenom
+ORDER BY utilisateur.id_etudiant;
