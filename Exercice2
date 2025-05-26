@@ -1,10 +1,16 @@
+Requête qui permet de filtrer les utilisateurs dont le nom commencent par un d:
+
 SELECT * 
 FROM utilisateur
 WHERE nom LIKE 'D%';
 
+Requête permettant de filtrer les objets avec une quantité strictement supérieure à 10:
+
 SELECT * 
 FROM materiel
 WHERE CAST(quantite AS INTEGER) > 10;
+
+Cette requête récupère toutes les réservations effectuées par l’étudiant ID=etu001 dont les dates de début et de fin sont comprises entre le 1er et le 31 mai 2025:
 
 SELECT * 
 FROM reservation
