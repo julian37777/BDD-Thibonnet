@@ -1,6 +1,10 @@
+Cette requête affiche la liste des étudiants ayant effectué une réservation, en montrant pour chacun leur nom/prénom et les détails de leurs réservations:
+
 SELECT utilisateur.id_etudiant, utilisateur.nom, utilisateur.prenom, reservation.id_reservation, reservation.date_debut, reservation.date_fin
 FROM utilisateur
 JOIN reservation ON utilisateur.id_etudiant = reservation.id_etudiant;
+
+Cette requête affiche les informations sur le matériel emprunté par l'étudiant ID=etu003, avec les informations sur les objets réservés et les dates de réservation:
 
 SELECT u.nom, u.prenom, m.objet, m.description, r.date_debut, r.date_fin
 FROM utilisateur u
