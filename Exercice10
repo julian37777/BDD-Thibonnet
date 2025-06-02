@@ -1,0 +1,92 @@
+-- Suppression des contraintes existantes
+ALTER TABLE disponibilite DROP CONSTRAINT IF EXISTS disponibilite_id_materiel_fkey;
+ALTER TABLE reservation DROP CONSTRAINT IF EXISTS reservation_id_etudiant_fkey;
+ALTER TABLE reservation DROP CONSTRAINT IF EXISTS reservation_id_materiel_fkey;
+ALTER TABLE reservation DROP CONSTRAINT IF EXISTS fk_dispo;
+
+-- Réinitialisation des tables
+TRUNCATE TABLE reservation RESTART IDENTITY CASCADE;
+TRUNCATE TABLE disponibilite RESTART IDENTITY CASCADE;
+TRUNCATE TABLE materiel RESTART IDENTITY CASCADE;
+TRUNCATE TABLE utilisateur RESTART IDENTITY CASCADE;
+
+-- Insertion de 100 000 utilisateurs
+DO $$
+DECLARE
+    i INT;
+BEGIN
+    FOR i IN 1..100000 LOOP
+        INSERT INTO utilisateur (id_etudiant, nom, prenom, mail)
+        VALUES (
+            'etu_'  || i,
+            'nom_' || i,
+            'prenom_' || i,
+            'user_' || i || '@example.com'
+        );
+    END LOOP;
+END $$;
+
+-- Insertion de 100 000 matériels
+DO $$
+DECLARE
+    i INT;
+BEGIN
+    FOR i IN 1..100000 LOOP
+        INSERT INTO materiel (id_materiel, objet, description, quantite)
+        VALUES (
+            'mat_' || i,
+            'materiel_' || i,
+            'description for materiel_' || i,
+            (random() * 20)::INT + 1
+        );
+    END LOOP;
+END $$;
+
+-- Insertion de 200 000 disponibilités
+DO $$
+DECLARE
+    i INT;
+    start_date DATE;
+    end_date DATE;
+BEGIN
+    FOR i IN 1..200000 LOOP
+        start_date := DATE '2025-01-01' + (random() * 365)::INT;
+        end_date := start_date + (random() * 30)::INT;
+
+        INSERT INTO disponibilite (id_disponibilite, id_materiel, date_debut, date_fin)
+        VALUES (
+            'dispo' || i,
+            'mat' || LPAD(((random() * 99999)::INT + 1)::text, 5, '0'),
+            start_date,
+            end_date
+        );
+    END LOOP;
+END $$;
+
+-- Insertion de 200 000 réservations
+DO $$
+DECLARE
+    i INT;
+    reservation_date DATE;
+    return_date DATE;
+    effective_return_date DATE;
+BEGIN
+    FOR i IN 1..200000 LOOP
+        reservation_date := DATE '2025-01-01' + (random() * 365)::INT;
+        return_date := reservation_date + (random() * 15)::INT;
+        effective_return_date := reservation_date + (random() * 15)::INT;
+
+        INSERT INTO reservation (
+            id_reservation, date_debut, date_fin, id_etudiant, id_materiel, id_disponibilite, date_retour_effectif
+        )
+        VALUES (
+            'res' || LPAD(i::text, 5, '0'),
+            reservation_date,
+            return_date,
+            'etu' || LPAD(((random() * 99999)::INT + 1)::text, 5, '0'),
+            'mat' || LPAD(((random() * 99999)::INT + 1)::text, 5, '0'),
+            'dispo' || LPAD(((random() * 199999)::INT + 1)::text, 5, '0'),
+            effective_return_date
+        );
+    END LOOP;
+END $$;
