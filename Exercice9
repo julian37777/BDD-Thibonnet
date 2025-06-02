@@ -1,2 +1,44 @@
+Modification de la table RESERVATION :
 ALTER TABLE reservation
 ADD COLUMN date_retour_effectif DATE;
+
+Création de la table RETOURMATERIEL :
+CREATE TABLE retourmateriel (
+    id_retour SERIAL PRIMARY KEY,
+    id_reservation VARCHAR(50) REFERENCES reservation(id_reservation),
+    date_retour DATE NOT NULL,
+    retard BOOLEAN
+);
+
+Insertion de données dans la nouvelle table :
+INSERT INTO retourmateriel (id_reservation, date_retour) VALUES
+('res001', '2025-05-22'),
+('res002', '2025-05-28'),
+('res003', '2025-06-07'),
+('res004', '2025-06-12'),
+('res005', '2025-06-30');
+
+Voici la requête permettant de créer une vue nommée retour_avec_retard qui affiche, pour chaque retour de matériel, si le retour est en retard et calcul une pénalité (2 € par jour de retard) en comparant la date de retour à la date de fin prévue de la réservation.
+CREATE VIEW retour_avec_retard AS
+SELECT
+    retourmateriel.id_retour,
+    retourmateriel.id_reservation,
+    reservation.id_etudiant,
+    reservation.date_fin,
+    retourmateriel.date_retour,
+    CASE
+        WHEN retourmateriel.date_retour > reservation.date_fin THEN TRUE
+        ELSE FALSE
+    END AS retard,
+    CASE
+        WHEN retourmateriel.date_retour > reservation.date_fin THEN (retourmateriel.date_retour - reservation.date_fin) * 2
+        ELSE 0
+    END AS penalite_euros
+FROM retourmateriel
+JOIN reservation ON retourmateriel.id_reservation = reservation.id_reservation;
+
+On observe le résultat avec cette requête :
+SELECT * FROM retour_avec_retard;
+
+Le résultat nous indique 3 retards ce qui est cohérent avec les dates de rendus comparés aux dates de fins des réservations. les pénalités sont aussi correctement calculés, la plus grande étant de 20€ pour un retard de 10jours (2€/j)
+
